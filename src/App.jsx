@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Board } from "./components/Board";
 import { Header } from "./components/Header";
+import { PictureIcon } from "./components/icons/PictureIcon";
+import { PlusIcon } from "./components/icons/PlusIcon";
 import { PrimaryActionsButton } from "./components/PrimaryActionsButton";
 import { BACKGROUNDS } from "./consts/consts";
 
@@ -38,14 +40,11 @@ function App() {
       <Board currentBackground={currentBackground}>
         <div className="flex w-full flex-wrap items-center justify-center gap-10">
           <PrimaryActionsButton ref={buttonRef} onClick={handleCreateColumn}>
-            <img
-              src="/src/assets/icons/add-square.svg"
-              alt="A plus sign icon"
-            />
+            <PlusIcon />
             Create
           </PrimaryActionsButton>
           <PrimaryActionsButton onClick={handleChangeBackground}>
-            <img src="/src/assets/icons/picture.svg" alt="A picture icon" />
+            <PictureIcon />
             Change Background
           </PrimaryActionsButton>
         </div>
