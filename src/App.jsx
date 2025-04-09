@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Board } from "./components/Board";
+import { Clock } from "./components/Clock";
 import { Header } from "./components/Header";
 import { PictureIcon } from "./components/icons/PictureIcon";
 import { PlusIcon } from "./components/icons/PlusIcon";
@@ -52,6 +53,7 @@ function App() {
     <>
       <Header>Organizer</Header>
       <Board currentBackground={currentBackground}>
+        <Clock />
         <div className="flex w-full flex-wrap items-center justify-center gap-10">
           <PrimaryActionsButton ref={buttonRef} onClick={handleCreateColumn}>
             <PlusIcon />
@@ -62,6 +64,7 @@ function App() {
             Change Background
           </PrimaryActionsButton>
         </div>
+        <div className="flex items-center justify-center pt-10"></div>
 
         {isCLicked && (
           <dialog
