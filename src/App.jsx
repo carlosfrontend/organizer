@@ -43,7 +43,6 @@ function App() {
 
   const hadleCancellDialog = () => {
     setIsClicked(false);
-    const dialog = document.querySelector("dialog");
   };
 
   const handleSubmitDialog = (event) => {
@@ -58,9 +57,14 @@ function App() {
     setIsClicked(false);
   };
 
-  const handleDeleteColumn = (id) => {
+  const handleDeleteColumn = (event, id) => {
     const newColumns = columns.filter((column) => column.id !== id);
-    setColumns(newColumns);
+    const column = event.target.closest("section");
+    column.classList.remove("animate-fade-in-up");
+    column.classList.add("animate-zoom-out");
+    setTimeout(() => {
+      setColumns(newColumns);
+    }, 200);
   };
 
   return (
@@ -82,7 +86,7 @@ function App() {
         {isCLicked && (
           <dialog
             open
-            className="shadow-white-500 mx-auto mt-20 h-auto animate-pulse-fade-in overflow-hidden rounded-xl border-1 border-white bg-neutral-900 opacity-80 shadow-2xl shadow-white/50 md:w-md"
+            className="shadow-white-500 z-30 mx-auto mt-20 h-auto animate-pulse-fade-in overflow-hidden rounded-xl border-1 border-white bg-neutral-900 opacity-80 shadow-2xl shadow-white/50 md:w-md"
           >
             <form
               method="dialog"
