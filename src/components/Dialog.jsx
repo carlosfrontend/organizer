@@ -10,7 +10,7 @@ export const Dialog = ({ hadleCancellDialog, handleSubmitDialog }) => {
         className="flex h-full w-full flex-col items-center justify-center p-4"
       >
         <h2 className="text-center text-xl font-medium text-white/90">
-          Put the name of the column and choose a color for the card
+          Put the name of the new the column:
         </h2>
         <input
           required
@@ -20,6 +20,9 @@ export const Dialog = ({ hadleCancellDialog, handleSubmitDialog }) => {
           placeholder="Column name"
           name="name"
         />
+        <h2 className="py-2 text-center text-xl font-medium text-white/90">
+          Choose a color:
+        </h2>
         <div className="place-content-centerj grid w-full grid-cols-3 gap-2">
           <div className="flex gap-1.5 justify-self-center pr-10">
             <input

@@ -13,9 +13,32 @@ import { createId } from "./utils/createId";
 
 function App() {
   const buttonRef = useRef(null);
+  const columnNameRef = useRef(null);
   const [isCLicked, setIsClicked] = useState(false);
   const [currentBackground, setCurrentBackground] = useState(BACKGROUNDS[0]);
-  const [columns, setColumns] = useState([]);
+  const [columns, setColumns] = useState([
+    {
+      id: createId(),
+      title: "To Do",
+      tasks: [],
+      bgColor: "bg-pink-400",
+      isEditable: false,
+    },
+    {
+      id: createId(),
+      title: "In Progress",
+      tasks: [],
+      bgColor: "bg-amber-400",
+      isEditable: false,
+    },
+    {
+      id: createId(),
+      title: "Done",
+      tasks: [],
+      bgColor: "bg-green-400",
+      isEditable: false,
+    },
+  ]);
 
   const id = createId();
 
@@ -27,6 +50,13 @@ function App() {
   useEffect(() => {
     buttonRef.current.focus();
   }, []);
+
+  useEffect(() => {
+    const currentEditableColumn = columns.find((column) => column.isEditable);
+    if (currentEditableColumn) {
+      columnNameRef.current.focus();
+    }
+  }, [columns]);
 
   const handleChangeBackground = () => {
     let currentPosition = BACKGROUNDS.indexOf(currentBackground);
@@ -54,7 +84,7 @@ function App() {
     const bgColor = formData.get("bgColor");
     setColumns((prevColumns) => [
       ...prevColumns,
-      { id: id, title: name, tasks: [], bgColor },
+      { id: id, title: name, tasks: [], bgColor, isEditable: false },
     ]);
     setIsClicked(false);
   };
@@ -67,6 +97,39 @@ function App() {
     setTimeout(() => {
       setColumns(newColumns);
     }, 200);
+  };
+
+  const handleEditColumn = (event, columnId) => {
+    const column = event.target.closest("section");
+    const title = column.querySelector("input");
+    title.focus();
+    const newColumns = columns.map((column) => {
+      if (column.id === columnId) {
+        return { ...column, isEditable: true };
+      }
+      return column;
+    });
+    setColumns(newColumns);
+  };
+
+  const handleColumnNameChange = (event, columnId) => {
+    const newColumns = columns.map((column) => {
+      if (column.id === columnId) {
+        return { ...column, title: event.target.value };
+      }
+      return column;
+    });
+    setColumns(newColumns);
+  };
+
+  const saveNewColumnName = (event, columnId) => {
+    const newColumns = columns.map((column) => {
+      if (column.id === columnId) {
+        return { ...column, isEditable: false };
+      }
+      return column;
+    });
+    setColumns(newColumns);
   };
 
   return (
@@ -97,6 +160,10 @@ function App() {
               key={column.id}
               column={column}
               handleDeleteColumn={handleDeleteColumn}
+              handleEditColumn={handleEditColumn}
+              handleColumnNameChange={handleColumnNameChange}
+              saveNewColumnName={saveNewColumnName}
+              columnNameRef={columnNameRef}
             />
           ))}
         </Grid>
