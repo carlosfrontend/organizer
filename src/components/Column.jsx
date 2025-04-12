@@ -8,7 +8,7 @@ export const Column = ({ column, handleDeleteColumn }) => {
     >
       <header className="flex w-full items-center justify-between border-b-1 border-white text-2xl font-bold">
         <div>
-          <h3 className="inline-block w-full p-2 break-all text-white antialiased">
+          <h3 className="inline-block w-full p-2 break-words text-white antialiased">
             {column.title}
           </h3>
         </div>
