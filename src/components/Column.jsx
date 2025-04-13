@@ -39,6 +39,7 @@ export const Column = ({
             disabled={!column.isEditable}
             onChange={(event) => handleColumnNameChange(event, column.id)}
             placeholder="Column name"
+            name="newColumnName"
           />
         </div>
       </header>
