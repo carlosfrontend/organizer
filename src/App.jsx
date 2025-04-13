@@ -13,7 +13,6 @@ import { createId } from "./utils/createId";
 
 function App() {
   const buttonRef = useRef(null);
-  const columnNameRef = useRef(null);
   const [isCLicked, setIsClicked] = useState(false);
   const [currentBackground, setCurrentBackground] = useState(BACKGROUNDS[0]);
   const [columns, setColumns] = useState([
@@ -51,13 +50,6 @@ function App() {
     buttonRef.current.focus();
   }, []);
 
-  useEffect(() => {
-    const currentEditableColumn = columns.find((column) => column.isEditable);
-    if (currentEditableColumn) {
-      columnNameRef.current.focus();
-    }
-  }, [columns]);
-
   const handleChangeBackground = () => {
     let currentPosition = BACKGROUNDS.indexOf(currentBackground);
     currentPosition += 1;
@@ -69,7 +61,6 @@ function App() {
   };
 
   const handleCreateColumn = () => {
-    event.preventDefault();
     setIsClicked(true);
   };
 
@@ -100,14 +91,18 @@ function App() {
   };
 
   const handleEditColumn = (event, columnId) => {
-    const column = event.target.closest("section");
-    const title = column.querySelector("input");
-    title.focus();
+    const section = event.target.closest("section");
+    const input = section.querySelector("input");
+    setTimeout(() => {
+      input.focus();
+    }, 200);
+    console.log(input);
     const newColumns = columns.map((column) => {
       if (column.id === columnId) {
         return { ...column, isEditable: true };
+      } else {
+        return { ...column, isEditable: false };
       }
-      return column;
     });
     setColumns(newColumns);
   };
@@ -122,7 +117,7 @@ function App() {
     setColumns(newColumns);
   };
 
-  const saveNewColumnName = (event, columnId) => {
+  const saveNewColumnName = (columnId) => {
     const newColumns = columns.map((column) => {
       if (column.id === columnId) {
         return { ...column, isEditable: false };
@@ -163,7 +158,6 @@ function App() {
               handleEditColumn={handleEditColumn}
               handleColumnNameChange={handleColumnNameChange}
               saveNewColumnName={saveNewColumnName}
-              columnNameRef={columnNameRef}
             />
           ))}
         </Grid>
