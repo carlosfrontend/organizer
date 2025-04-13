@@ -42,15 +42,18 @@ function App() {
   const id = createId();
 
   useEffect(() => {
+    // Set the default background image at the start
     const main = document.getElementById("main");
     main.style.backgroundImage = `url(${currentBackground})`;
   }, [currentBackground]);
 
   useEffect(() => {
+    // Focus the button when the component mounts
     buttonRef.current.focus();
   }, []);
 
   const handleChangeBackground = () => {
+    // Change the background image
     let currentPosition = BACKGROUNDS.indexOf(currentBackground);
     currentPosition += 1;
     if (currentPosition >= BACKGROUNDS.length) {
@@ -61,14 +64,17 @@ function App() {
   };
 
   const handleCreateColumn = () => {
+    // Open the dialog
     setIsClicked(true);
   };
 
   const hadleCancellDialog = () => {
+    // Close the dialog
     setIsClicked(false);
   };
 
   const handleSubmitDialog = (event) => {
+    // Add the new column
     event.preventDefault();
     const formData = new FormData(event.target);
     const name = formData.get("name");
@@ -81,6 +87,7 @@ function App() {
   };
 
   const handleDeleteColumn = (event, id) => {
+    // Delete the column
     const newColumns = columns.filter((column) => column.id !== id);
     const column = event.target.closest("section");
     column.classList.remove("animate-fade-in-up");
@@ -91,6 +98,7 @@ function App() {
   };
 
   const handleEditColumn = (event, columnId) => {
+    // Edit the column
     const section = event.target.closest("section");
     const input = section.querySelector("input");
     setTimeout(() => {
@@ -118,6 +126,7 @@ function App() {
   };
 
   const saveNewColumnName = (columnId) => {
+    // Save the new column name
     const newColumns = columns.map((column) => {
       if (column.id === columnId) {
         return { ...column, isEditable: false };
@@ -142,7 +151,7 @@ function App() {
             Change Background
           </PrimaryActionsButton>
         </div>
-
+        {/* If isCLicked is true, show the dialog */}
         {isCLicked && (
           <Dialog
             hadleCancellDialog={hadleCancellDialog}
