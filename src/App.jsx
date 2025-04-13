@@ -104,7 +104,7 @@ function App() {
     setTimeout(() => {
       input.focus();
     }, 200);
-    console.log(input);
+
     const newColumns = columns.map((column) => {
       if (column.id === columnId) {
         return { ...column, isEditable: true };
